@@ -19,16 +19,16 @@ for i in range(z):
     turn_list[i][1] = c
     turn_list[i][2] = s
 result_mat = inf
-for i in itertools.permutations(turn_list,z):
+for i in itertools.permutations(range(z),z):
     for n in range(z+1):
-        #print(i,n)
-        for p in list(itertools.combinations(i,n)):
+        for p in list(itertools.combinations(range(z),n)):
             for m in range(x):
                 out_mat[m] = first_mat[m][:]
             for m in i:
                 #print(i,n,p,m)
                 if m not in p:
-                    r, c, s = m
+                    #print(turn_list[m])
+                    r, c, s = turn_list[m]
                     for j in range(1, s + 1):
                         temp =out_mat[r -j -1][c -j -1]
                         for k in range(2*j):
@@ -41,7 +41,7 @@ for i in itertools.permutations(turn_list,z):
                             out_mat[r-j-1][c+j-1-k] = out_mat[r-j-1][c+j-1-k-1]
                         out_mat[r-j-1][c-j] = temp
                 else:
-                    r, c, s = m
+                    r, c, s = turn_list[m]
                     for j in range(1, s + 1):
                         temp =out_mat[r -j -1][c -j -1]
                         for k in range(2*j):
@@ -53,8 +53,8 @@ for i in itertools.permutations(turn_list,z):
                         for k in range(2*j):
                             out_mat[r+j-1-k][c-j-1] = out_mat[r+j-1-k-1][c-j-1]
                     out_mat[r-j-1][c-j] = temp
-            for z in range(x):
-                temp2 =sum(out_mat[z])
+            for z1 in range(x):
+                temp2 =sum(out_mat[z1])
             if temp2 < result_mat:
                 result_mat = temp2
                 #print(result_mat)

@@ -1,3 +1,5 @@
+# 다시 풀기 :(
+
 R, C, K = list(map(int,input().split()))
 
 arr = [[] for _ in range(R)]
@@ -77,9 +79,9 @@ for heat in heater_pos:
                 if heat[0] - i >= 0 and heat[1] + j < C and j > 0:
                     if arr[heat[0] - i + 1][heat[1] + j] > 0 and [heat[0] - i + 1, heat[1] - j, 0] not in wall_pos:
                         arr[heat[0] - i][heat[1] + j] += 6 -i
-                    elif heat[1] + j - 1 >= 0 and arr[heat[0] - i + 1][heat[1] - j + 1] > 0 and [heat[0] + j, heat[1] - i + 1, 0] not in wall_pos and [heat[0] + j, heat[1] - i, 1] not in wall_pos:
-                        arr[heat[0] + j][heat[1] - i] += 6 -i
-                    elif heat[0] + j + 1 < R and arr[heat[0] + j + 1][heat[1] - i + 1] > 0 and [heat[0] + j + 1, heat[1] - i + 1, 0] not in wall_pos and [heat[0] + j, heat[1] - i, 1] not in wall_pos:
+                    elif heat[1] - i - 1 >= 0 and arr[heat[0] - i + 1][heat[1] + j - 1] > 0 and [heat[0] - i + 1, heat[1] + j, 0] not in wall_pos and [heat[0] - i + 1, heat[1] + j - 1, 1] not in wall_pos:
+                        arr[heat[0] - i][heat[1] + j] += 6 -i
+                    elif heat[1] + j + 1 < C and arr[heat[0] - i + 1][heat[1] + j + 1] > 0 and [heat[0] + j + 1, heat[1] - i + 1, 0] not in wall_pos and [heat[0] + j, heat[1] - i, 1] not in wall_pos:
                         arr[heat[0] + j][heat[1] - i] += 6 -i
         arr[heat[0]][heat[1]] -= 1
 

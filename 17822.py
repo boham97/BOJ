@@ -18,4 +18,5 @@ for turn in range(T):
     pprint.pprint(arr)
 temp = []
 
-for i in range(10)
+for i in range(10):
+    pass

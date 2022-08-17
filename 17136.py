@@ -1,15 +1,12 @@
-import itertools
-
 input_arr = [list(map(int,input().split())) for _ in range(10)]
 cnt = 0
-for i in range(10):
-    cnt += input_arr[i].count(1)
-
-print(cnt)
-
 min_paper = 25
-
-test_arr = [[] for _ in range(10)]
-
+test = [[0] * 10 for i in range(10)]
 while(1):
-    pass
+    paper = [0, 0, 0, 0, 0]
+    size = [1, 4, 9, 16, 25]
+    for i in range(10):
+        test[i] = input_arr[i]
+    for i in range(10):
+        for j in range(10):
+            

@@ -24,7 +24,6 @@ while bit[4] < 4:
                         arr[i].pop(j-1)
                         arr[i].insert(0, 0)
             #print('')
-
         if bit[move] == 1:
             for i in range(N):
                 for j in range(N-1, -1, -1):
@@ -86,7 +85,6 @@ while bit[4] < 4:
                         zeros += 1
                     else:
                         arr[j + zeros][i], arr[j][i] = arr[j][i], arr[j + zeros][i]
-
 
 
     for i in range(N):

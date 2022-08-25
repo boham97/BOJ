@@ -18,3 +18,9 @@
 
 ### [17135캐슬 디펜스](https://www.acmicpc.net/problem/17135)
 ### [17136색종이 붙이기](https://www.acmicpc.net/problem/17136)
+### [15684 사다리 조작](https://www.acmicpc.net/submit/15684/48296931)
+- 사다리 줄 하나씩 체크해야 시간초과 안뜸
+- 모든 사다리 확인시 시간 초과
+### [Nqueen](https://www.acmicpc.net/problem/9663)
+- 순열조합사용
+- 대각선관계가 없으면 재귀

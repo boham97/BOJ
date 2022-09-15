@@ -39,5 +39,5 @@ for year in range(K):
     for i in range(N):
         for j in range(N):
             arr[i][j] += energy[i][j]
-    print(len(tree))
-
+    #print(len(tree))
+    print(arr)

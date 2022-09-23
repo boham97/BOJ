@@ -1,50 +1,31 @@
-from collections import deque
-def l(n):
-    for i in range(3):
-        for j in range(3):
-            temp[1+n*(j-1)][1-n*(i-1)] = garo[i][j]
-    for i in range(3):
-        for j in range(3):
-            garo[i][j] = temp[i][j]
-    if n == 1:
-        for i in range(3):
-            sero[0].appendleft(sero[0].pop())
-    elif n == -1:
-        for i in range(3):
-            sero[0].append(sero[0].popleft())
+def dfs(i,cost):
+    global ans
+    temp = cost
+    for j in range(i+1,N):
+        temp += minmin[mat[j]]
+    if temp+ minmin[0] > ans:
+        return
+    if i == N:
+        cost += matrix[mat[i-1]][0]
+        if cost < ans:
+            ans = cost
+        return
+    else:
+        for j in range(i,N):
+            mat[i], mat[j] = mat[j], mat[i]
+            if matrix[mat[i-1]][mat[i]] == 0:
+                pass
+            dfs(i+1, cost + matrix[mat[i-1]][mat[i]])
+            mat[i], mat[j] = mat[j], mat[i]
 
-def change(n):
-    if n == 0:
-        for i in range(3):
-            for j in range(12):
-                
-    elif n == 1:
-        return 
-
-
-
-
-garo = [
-    deque([1,1,1,2,2,2,3,3,3,5,5,5]),
-    deque([1,1,1,2,2,2,3,3,3,5,5,5]),
-    deque([1,1,1,2,2,2,3,3,3,5,5,5]),
-]
-sero = [
-    deque([0,0,0,2,2,2,4,4,4,5,5,5]),
-    deque([0,0,0,2,2,2,4,4,4,5,5,5]),
-    deque([0,0,0,2,2,2,4,4,4,5,5,5]),
-]
-
-temp = [[0]*3 for _ in range(3)]
-
-for i in range(5):
-    l(1) #1+   , -1:-
-    print('#####')
-    print(garo[0])
-    print(garo[1])
-    print(garo[2])
-    print()
-    print(sero[0])
-    print(sero[1])
-    print(sero[2])
-    print()
+N = int(input())
+matrix = [list(map(int,input().split())) for _ in range(N)]
+minmin = [0] * N
+ans = 1000000 * N
+minsum = 0
+for i in range(N):
+    minmin[i] = min(matrix[i])
+    minsum += minmin[i]
+mat = list(range(N))
+dfs(1,0)
+print(ans)

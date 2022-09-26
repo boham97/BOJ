@@ -17,5 +17,14 @@ def f(i, N):
 N = int(input())
 ans = 0
 mat = list(range(N))
-f(0,len(mat))
+for i in range(N//2):
+    mat[0], mat[i] = mat[i], mat[0]
+    f(1,N)
+    mat[0], mat[i] = mat[i], mat[0]
+ans = ans *2
+if N % 2 == 1:
+    mat[0], mat[N//2] = mat[N//2], mat[0]
+    f(1,N)
+    mat[0], mat[N//2] = mat[N//2], mat[0]
+    
 print(ans)

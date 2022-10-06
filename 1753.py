@@ -11,6 +11,7 @@ d = [INF] * (V+1)
 d[start] = 0
 visited = [0]*(V+1)
 visited[start] = 1
+<<<<<<< HEAD
 for j,k in graph[start]:
     d[j] = min(d[j],k)
 for i in range(1,V+1):
@@ -28,9 +29,32 @@ for _ in range(V):
     visited[next] = 1
     for i in range(len(graph[next])):
         d[graph[next][i][0]] = min(d[graph[next][i][0]], d[next]+graph[next][i][1])
+=======
+used =[start]
+for j,k in graph[start]:
+    d[j] = min(d[j],k)
+
+for _ in range(V):
+    temp_min = INF
+    next = 0
+    for i in used:
+        for j,k in graph[i]:
+            if visited[j] == 0 and k<temp_min:
+                temp_min = k
+                next = j
+    visited[next] = 1
+    used.append(next)
+    for i,j in graph[next]:
+        d[i] = min(d[i], d[next]+j)
+    #print(d)
+>>>>>>> 9ab4d46fca30cf41210c3fefd9a626b9f9d66caf
 for i in range(1,V+1):
     if d[i] == INF:
         print('INF')
     else:
+<<<<<<< HEAD
         print(d[i])
 print(graph)
+=======
+        print(d[i])
+>>>>>>> 9ab4d46fca30cf41210c3fefd9a626b9f9d66caf

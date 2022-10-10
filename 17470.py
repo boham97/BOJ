@@ -1,112 +1,59 @@
-# 다시 풀기 :(
+import sys
 
 N, M, R = list(map(int,input().split()))
 
-mat = [[] for _ in range(N)]
+mat = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 
-for i in range(N):
-    mat[i] = list(map(int,input().split()))
-
-orders = list(map(int,input().split()))
-turn = 0
-mirror = 0
-arr =[0, 1, 2, 3]
-orderlist =[0, 0, 0, 0, 0, 0, 0,]
+orders = list(map(int,sys.stdin.readline().split()))
+turn_list = [[0,1,2,3],[3,0,1,2],[2,3,0,1],[1,2,3,0]]
+arr = [0,1,2,3]
+turn = [0,1,2,3]
 for order in orders:
-    orderlist[order] += 1
-
-order1 = orderlist[1] % 2
-order2 = orderlist[2] % 2
-order3 = (orderlist[3] + orderlist[5] + orderlist[4] * 3 + orderlist[6] * 3) % 4
-mirror = (orderlist[1] + orderlist[2]) % 2
-turn = (orderlist[2] * 2 + orderlist[3] + orderlist[4] * 3) % 4
-
-if order1 == 1:
-    arr[0], arr[1], arr[2], arr[3] = arr[3], arr[2], arr[1], arr[0]
-if order2 == 1:
-    arr[0], arr[1], arr[2], arr[3] = arr[1], arr[0], arr[3], arr[2]
-for i in range(order3):
-    arr[0], arr[1], arr[2], arr[3] = arr[3], arr[0], arr[1], arr[2]
-
-""" if order == 3:
-    arr[0], arr[1], arr[2], arr[3] = arr[3], arr[0], arr[1], arr[2]
-    turn += 1
-if order == 4:
-    arr[0], arr[1], arr[2], arr[3] = arr[1], arr[2], arr[3], arr[0]
-    turn += 3
-if order == 5:
-    arr[0], arr[1], arr[2], arr[3] = arr[3], arr[0], arr[1], arr[2]
-if order == 6:
-    arr[0], arr[1], arr[2], arr[3] = arr[1], arr[2], arr[3], arr[0] """
-
-#print(arr, mirror, turn)
-
-mat1 =[[0 for j in range(M//2)] for _ in range(N//2)]
+    if order == 1:
+        arr[0], arr[1], arr[2],arr[3] = arr[3],arr[2],arr[1],arr[0]
+        turn[0], turn[1], turn[2], turn[3] = turn[3], turn[2], turn[1], turn[0]
+    elif order == 2:
+        arr[0], arr[1], arr[2],arr[3] = arr[1], arr[0], arr[3], arr[2]
+        turn[0], turn[1], turn[2], turn[3] = turn[1], turn[0], turn[3], turn[2]
+    elif order == 3:
+        arr[0], arr[1], arr[2],arr[3] = arr[3], arr[0], arr[1], arr[2]
+        turn[0], turn[1], turn[2], turn[3] = turn[3], turn[0], turn[1], turn[2]
+    elif order == 4:
+        arr[0], arr[1], arr[2],arr[3] = arr[1], arr[2], arr[3], arr[0]
+        turn[0], turn[1], turn[2], turn[3] = turn[1], turn[2], turn[3], turn[0]
+    elif order == 5:
+        arr[0], arr[1], arr[2],arr[3] = arr[3], arr[0], arr[1], arr[2]
+    elif order == 6:
+        arr[0], arr[1], arr[2],arr[3] = arr[1], arr[2], arr[3], arr[0]
+temp = [[[0] * (M//2) for _ in range(N//2)] for _ in range(4)]
 for i in range(N//2):
-    for j in range(M//2):
-        mat1[i][j] = mat[i][j]
-mat2 =[[0 for j in range(M//2)] for _ in range(N//2)]
-for i in range(N//2):
-    for j in range(M//2):
-        mat2[i][j] = mat[i][j+ M//2]
-mat3 =[[0 for j in range(M//2)] for _ in range(N//2)]
-for i in range(N//2):
-    for j in range(M//2):
-        mat3[i][j] = mat[i + N//2][j + M//2]
-mat4 =[[0 for j in range(M//2)] for _ in range(N//2)]
-for i in range(N//2):
-    for j in range(M//2):
-        mat4[i][j] = mat[i + N//2][j]
-big_mat= [mat1, mat2, mat3, mat4]
-#print(big_mat)
-
-for i in range(mirror):
+    temp[0][i] = mat[i][:(M//2)]
+    temp[1][i] = mat[i][(M//2):M]
+    temp[2][i] = mat[i+N//2][(M//2):M]
+    temp[3][i] = mat[i+N//2][:(M//2)]
+flag = 0
+if turn not in turn_list:
+    flag = 1
+    turn[0], turn[1], turn[2], turn[3] = turn[3], turn[2], turn[1], turn[0]
     for j in range(4):
-        for x in range(len(big_mat[j])//2):
-            for y in range(len(big_mat[j][0])):
-                big_mat[j][x][y], big_mat[j][len(big_mat[j])-x-1][y] = big_mat[j][len(big_mat[j])-x-1][y], big_mat[j][x][y]
-#print(big_mat)
+        temp[j] = temp[j][::-1]
 
+for l in range(4):
+    iter = turn_list.index(turn)
+    if flag:
+        iter = 4 - iter
+    for i in range(iter):
+        x = len(temp[l])
+        y = len(temp[l][0])
+        temp2 = [[0]*x for _ in range(y)]
+        for j in range(x):
+            for k in range(y):
+                temp2[k][x-j-1] = temp[l][j][k]
+        temp[l] = [[0]*x for _ in range(y)]
+        for j in range(y):
+            temp[l][j] = temp2[j][:]
 
-for i in range(turn):
-    for j in range(4):
-        temp = [[0 for k in range(len(big_mat[j]))] for m in range(len(big_mat[j][0]))]
-        for x in range(len(big_mat[j])):
-            for y in range(len(big_mat[j][0])):
-                temp[y][len(big_mat[j])-x-1] = big_mat[j][x][y]
-        n =len(big_mat[j][0])
-        big_mat[j]=[]
-        for k in range(n):
-            big_mat[j].append(temp[k][:])
-    #print(big_mat)
-    #print()
-
-
-
-result = [[0 for i in range(len(big_mat[0][0])*2)] for j in range(len(big_mat[0])*2)]
-
-for i in range(len(big_mat[0])):
-    for j in range(len(big_mat[0][0])):
-        #print(big_mat[arr[0]][i][j])
-        result[i][j] = big_mat[arr[0]][i][j]
-
-for i in range(len(big_mat[0])):
-    for j in range(len(big_mat[0][0])):
-        result[i][j + len(big_mat[0][0])] = big_mat[arr[1]][i][j]
-
-for i in range(len(big_mat[0])):
-    for j in range(len(big_mat[0][0])):
-        result[i + len(big_mat[0])][j + len(big_mat[0][0])] = big_mat[arr[2]][i][j]
-
-for i in range(len(big_mat[0])):
-    for j in range(len(big_mat[0][0])):
-        result[i + len(big_mat[0])][j] = big_mat[arr[3]][i][j]
-
-
-for i in range(len(big_mat[0])*2):
-    for j in range(len(big_mat[0][0])*2):
-        print(result[i][j], end='')
-        if j < len(big_mat[0][0])*2 - 1:
-            print(end= ' ')
-    if i < len(big_mat[0])*2 - 1:
-        print()
+for i in range(len(temp[0])):
+    print(*temp[arr[0]][i],*temp[arr[1]][i])
+for i in range(len(temp[3])):
+    print(*temp[arr[3]][i],*temp[arr[2]][i])

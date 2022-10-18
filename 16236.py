@@ -1,60 +1,43 @@
-N = int(input())
-size = 2
-eaten_fish = 0
-arr = [0] *N
-for i in range(N):
-    arr[i] = list(map(int, input().split()))
-logic = 5
-ans = 0
+from collections import deque
 
+N = int(input())
+arr = [list(map(int,input().split())) for _ in range(N)]
+size = 2
+ate = 0
 for i in range(N):
     for j in range(N):
         if arr[i][j] == 9:
-            shark = [i, j]
-            arr[i][j] = 0
+            temp = [i,j]
+arr[temp[0]][temp[1]] = 0
+time = 0
+que = deque()
+que.append(temp)
 
-while logic:
-    breaker = 0
-    targets = list()
-    for i in range(N):
-        for j in range(N):
-            if 0 < arr[i][j] < size:
-                targets.append([abs(shark[0] - i)+abs(shark[1] - j), i, j])
-    targets.sort()
-    if len(targets) == 0:
+target = [[0,0]]
+while target:
+    target = []
+    visited = [[N*N+1]*N for _ in range(N)]
+    visited[que[0][0]][que[0][1]]  = 0
+    while que:
+        x, y = que.popleft()
+        for dx,dy in [[x-1,y],[x+1,y],[x,y+1],[x,y-1]]:
+            if 0<= dx<N and 0<=dy<N and arr[dx][dy] <= size and visited[dx][dy] > visited[x][y] +1:
+                que.append([dx,dy])
+                visited[dx][dy] = visited[x][y] +1
+                if 0 < arr[dx][dy] < size:
+                    target.append([visited[x][y] +1, dx,dy])
+    #print(visited)
+    #print(target)
+    if len(target) == 0:
         break
-    for fish in targets:
-        move = range(fish[0])
-        if breaker == 1:
-            break
-        for i in range(1 << fish[0]):
-            cnt = 0
-            up = list()
-            for j in range(fish[0]):
-                if i & (1 << j):
-                    cnt += 1
-                    up.append(j)
-            if cnt == abs(shark[0] - fish[1]):
-                temp_pos = [shark[0], shark[1]]
-                for j in range(fish[0]):
-                    if j in up:
-                        temp_pos[0] += int((fish[1] - shark[0])/abs(fish[1] - shark[0]))
-                        if arr[temp_pos[0]][temp_pos[1]] > size:
-                            break
-                    else:
-                        temp_pos[1] += int((fish[2] - shark[1]) / abs(fish[2] - shark[1]))
-                        if arr[temp_pos[0]][temp_pos[1]] > size:
-                            break
-                else:
-                    shark = [temp_pos[0], temp_pos[1]]
-                    arr[temp_pos[0]][temp_pos[1]] = 0
-                    eaten_fish += 1
-                    ans += fish[0]
-                    breaker = 1
-                    if eaten_fish == size:
-                        size += 1
-                        eaten_fish = 0
+    target.sort()
+    time += target[0][0]
+    que.append([target[0][1],target[0][2]])
+    arr[target[0][1]][target[0][2]] = 0
+    ate += 1
+    if ate == size:
+        size += 1
+        ate = 0
 
-    print()
+print(time)
 
-print(ans)

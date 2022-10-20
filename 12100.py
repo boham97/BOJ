@@ -90,6 +90,7 @@ while bit[4] < 4:
     for i in range(N):
         if max(arr[i]) > max_num:
             max_num = max(arr[i])
+            print(bit,max_num)
     bit[0] += 1
 
 print(max_num)

@@ -1,3 +1,4 @@
+#계단 오르기 2579.파이
 N = int(input())
 stair = [0]* (N+1)
 ans = [[0]*(N+1) for _ in range(2)]

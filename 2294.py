@@ -15,3 +15,5 @@ if ans[-1] != 20000:
     print(ans[-1])
 else:
     print(-1)
+    #2294 동전2 
+    

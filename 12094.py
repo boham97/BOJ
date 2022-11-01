@@ -119,4 +119,4 @@ memo = {}
 ans = 2
 dfs(0,arr)
 print(ans)
-print(memo)
+#print(memo)

@@ -31,8 +31,3 @@ while stack:
         temp1, temp2, temp = stack.pop()
 #print(DP)
 print(cnt)
-
-'''
-못가는 길이면 pop 했을떄 DP[x][y] == 0 => DP[x][y] = -1 로 변경
--1이면 안가서 경우의수 줄이기
-'''

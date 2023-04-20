@@ -20,18 +20,24 @@ while case:
     N, M = map(int, input().split())
     if N ==0 and M == 0:
         break
+    
     arr = [0] * (N+1)
     ans = 0
+    temp = set()
     
     for _ in range(M):
         x, y = map(int, input().split())
         if union(x, y):
-            ans -= 1
-            
+            temp.add(x)
+            temp.add(y)
+    cycle = set()
+    for i in temp:
+        cycle.add(find(i))
+        
     for i in range(1, N+1):
-        if arr[i] == 0:
+        if arr[i] == 0 and i not in cycle:
             ans += 1
-            print(i)
+
 
     if ans > 1:
         print(f'Case {case}: A forest of {ans} trees.')

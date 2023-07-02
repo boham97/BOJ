@@ -16,22 +16,16 @@ for _ in range(T):
             heappush(dq, (s,i))
         else:
             if s == 1:
-                while iq and arr[iq[0][1]]:
-                    heappop(iq)
                 if iq and not arr[iq[0][1]]:
                     arr[iq[0][1]] = 1
-                    heappop(iq)
             else:
-                while dq and arr[dq[0][1]]:
-                    heappop(dq)
                 if iq and not arr[iq[0][1]]:
                     arr[dq[0][1]] = 1
-                    heappop(dq)
                     
-    while iq and arr[iq[0][1]]:
-        heappop(iq)
-    while dq and arr[dq[0][1]]:
-        heappop(dq)
+        while iq and arr[iq[0][1]]:
+            heappop(iq)
+        while dq and arr[dq[0][1]]:
+            heappop(dq)
 
     if iq:
         print(-iq[0][0], dq[0][0])

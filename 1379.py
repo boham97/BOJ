@@ -10,13 +10,13 @@ room = [i for i in range(1, n+ 1)]
 
 hq = []
 for x in arr:
-    while hq and hq[0][0] <= x[1]:
+    if hq and hq[0][0] <= x[1]:
         end, r = heappop(hq)
         heappush(room, r) #입력 후보로 
     r = heappop(room)
     heappush(hq, [x[2], r])
     lecture[x[0]] = r
-
+    
 print(max(lecture))
 for x in lecture[1:]:
     print(x)

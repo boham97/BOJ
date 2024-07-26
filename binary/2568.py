@@ -7,6 +7,8 @@ arr.append([0, 0])
 arr.sort()
 
 temp = [-1]
+dp = [1]
+ans = []
 
 for i in range(n + 1):
     num = arr[i][1]
@@ -15,7 +17,7 @@ for i in range(n + 1):
         continue
     if num > temp[-1]:
         temp.append(num)
-
+        dp.append(len(temp) - 1)
 
     else:
         start = 1
@@ -24,23 +26,19 @@ for i in range(n + 1):
             mid = (start + end)// 2
             if temp[mid] >= num and temp[mid-1] < num:
                 temp[mid] = num
+                dp.append(mid)
                 break
             elif temp[mid] < num:
                 start = mid + 1
             elif temp[mid] > num:
                 end = mid - 1
 
-j = len(temp) - 1
-temp.append(5000001)
-i = n
-ans = []
-while i > 0:
-    if j >0 and temp[j] <= arr[i][1] <= temp[j + 1]:
-        j -= 1
+L = len(temp) - 1
+for i in range(n , 0, -1):
+    if dp[i] == L:
+        L -= 1
     else:
         ans.append(arr[i][0])
-    i -= 1
-ans.sort()
+ans.reverse()
 print(len(ans))
-for i in ans:
-    print(i)
+print(*ans, sep='\n')

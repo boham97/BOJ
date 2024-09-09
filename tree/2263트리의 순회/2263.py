@@ -5,31 +5,29 @@ class Node():
         self.right = right
 
 
-def make_left(left: int, right: int, post_root: int):
-    root = post[post_root]
-    if right < left:
+def make_left(a, b, c, d):
+    if b < a or d < c:
         return
-    left_son = post[right]
-    print(left, right, root, left_son, "left")
-    pather[left_son] = root
-    for i in range(left, right + 1):
-        if inorder[i] == left_son:
-            make_left(left, i - 1, left_son)
-            make_right(i + 1, right, left_son)
-            break
+    root = inorder[b + 1]
+    son = post[d]
+    pather[son] = root
+    print(a, b, c, d, root, son, 'l')
+    for i in range(a, b + 1):
+        if inorder[i] == son:
+            make_right(i+1, b, d - b + i, d - 1)
+            
 
-def make_right(left: int, right: int, post_root: int):
-    if right < left:
+def make_right(a, b, c, d):
+    if b < a or d < c:
         return
-    right_son = post[right - 1]
-    print(left, right, root, right_son, "right")
-    pather[right_son] = root
-    for i in range(left, right + 1):
-        if inorder[i] == right_son:
-            make_left(left, i - 1, right_son)
-            make_right(i + 1, right, right_son)
-            break    
-
+    root = inorder[a - 1]
+    son = post[d]
+    pather[son] = root
+    print(a,b, c,d, root, son, 'r')
+    for i in range(a, b + 1):
+        if inorder[i] == son:
+            make_right(i+1, b, d - b + i, d - 1)
+            make_left(a, i -1, a - 1, i - 2)
 
 n = int(input())
 inorder = list(map(int, input().split()))
@@ -40,9 +38,9 @@ root = post[-1]
 target = 0
 for i in range(n):
     if inorder[i] == root:
-        target = i
-        make_left(0, i - 1, n - 1)
-        make_right(i + 1, n - 1, n - 1)
+        print(i)
+        make_right(i + 1, n - 1, i, n -2)
+        make_left(0, i -1, 0, i - 1)
         break
 
 print(*pather)
